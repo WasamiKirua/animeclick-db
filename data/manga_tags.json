@@ -1,0 +1,405 @@
+{
+  "extraction_date": "2025-02-24T17:03:38.233163",
+  "tags": [
+    {
+      "href": "/manga/tags/amici-di-infanzia",
+      "text": "(1108) Amici-di-infanzia"
+    },
+    {
+      "href": "/manga/tags/isekai",
+      "text": "(787) isekai"
+    },
+    {
+      "href": "/manga/tags/a-colori",
+      "text": "(781) A-colori"
+    },
+    {
+      "href": "/manga/tags/demoni",
+      "text": "(767) Demoni"
+    },
+    {
+      "href": "/manga/tags/reincarnazione",
+      "text": "(744) Reincarnazione"
+    },
+    {
+      "href": "/manga/tags/differenza-di-et%C3%A0",
+      "text": "(732) Differenza-di-età"
+    },
+    {
+      "href": "/manga/tags/omicidi-assassinio",
+      "text": "(726) Omicidi-Assassinio"
+    },
+    {
+      "href": "/manga/tags/convivenza",
+      "text": "(677) convivenza"
+    },
+    {
+      "href": "/manga/tags/abilit%C3%A0-speciali",
+      "text": "(644) Abilità-speciali"
+    },
+    {
+      "href": "/manga/tags/fantasmi-spiriti",
+      "text": "(631) Fantasmi-spiriti"
+    },
+    {
+      "href": "/manga/tags/morte-di-una-persona-cara",
+      "text": "(607) Morte-di-una-persona-cara"
+    },
+    {
+      "href": "/manga/tags/arti-marziali",
+      "text": "(603) arti-marziali"
+    },
+    {
+      "href": "/manga/tags/studenti-studentesse",
+      "text": "(600) Studenti-Studentesse"
+    },
+    {
+      "href": "/manga/tags/scuola-superiore",
+      "text": "(596) Scuola-superiore"
+    },
+    {
+      "href": "/manga/tags/triangolo-amoroso",
+      "text": "(590) Triangolo-amoroso"
+    },
+    {
+      "href": "/manga/tags/protagonista-femminile-forte",
+      "text": "(582) Protagonista-femminile-forte"
+    },
+    {
+      "href": "/manga/tags/webtoon",
+      "text": "(570) webtoon"
+    },
+    {
+      "href": "/manga/tags/universit%C3%A0-studenti-universitari",
+      "text": "(544) Università-Studenti-universitari"
+    },
+    {
+      "href": "/manga/tags/mostri",
+      "text": "(533) mostri"
+    },
+    {
+      "href": "/manga/tags/detective-investigatori",
+      "text": "(516) Detective-Investigatori"
+    },
+    {
+      "href": "/manga/tags/spade-spadaccini",
+      "text": "(512) Spade-Spadaccini"
+    },
+    {
+      "href": "/manga/tags/spargimento-di-sangue",
+      "text": "(507) Spargimento-di-sangue"
+    },
+    {
+      "href": "/manga/tags/4-koma-yonkoma",
+      "text": "(498) 4-koma-yonkoma"
+    },
+    {
+      "href": "/manga/tags/protagonista-maschile-forte",
+      "text": "(489) protagonista-maschile-forte"
+    },
+    {
+      "href": "/manga/tags/nudit%C3%A0",
+      "text": "(485) Nudità"
+    },
+    {
+      "href": "/manga/tags/vendetta",
+      "text": "(485) vendetta"
+    },
+    {
+      "href": "/manga/tags/club-scolastico",
+      "text": "(456) club-scolastico"
+    },
+    {
+      "href": "/manga/tags/nobilt%C3%A0",
+      "text": "(448) Nobiltà"
+    },
+    {
+      "href": "/manga/tags/opera-vincitrice-di-premi",
+      "text": "(447) Opera-vincitrice-di-premi"
+    },
+    {
+      "href": "/manga/tags/bullismo",
+      "text": "(433) Bullismo"
+    },
+    {
+      "href": "/manga/tags/protagonista-maschile-con-occhiali",
+      "text": "(431) Protagonista-maschile-con-occhiali"
+    },
+    {
+      "href": "/manga/tags/volume-unico",
+      "text": "(430) Volume-unico"
+    },
+    {
+      "href": "/manga/tags/gatti",
+      "text": "(429) Gatti"
+    },
+    {
+      "href": "/manga/tags/amicizia",
+      "text": "(427) Amicizia"
+    },
+    {
+      "href": "/manga/tags/impiegati",
+      "text": "(417) Impiegati"
+    },
+    {
+      "href": "/manga/tags/cibo",
+      "text": "(409) cibo"
+    },
+    {
+      "href": "/manga/tags/violenza",
+      "text": "(402) Violenza"
+    },
+    {
+      "href": "/manga/tags/viaggio",
+      "text": "(392) viaggio"
+    },
+    {
+      "href": "/manga/tags/amore-non-corrisposto",
+      "text": "(352) Amore-non-corrisposto"
+    },
+    {
+      "href": "/manga/tags/famiglia",
+      "text": "(345) Famiglia"
+    },
+    {
+      "href": "/manga/tags/aspetto-diverso-dalla-personalit%C3%A0",
+      "text": "(340) Aspetto-diverso-dalla-personalità"
+    },
+    {
+      "href": "/manga/tags/compagni-di-classe",
+      "text": "(339) Compagni-di-classe"
+    },
+    {
+      "href": "/manga/tags/relazione-umano-non-umano",
+      "text": "(339) Relazione-umano-non-umano"
+    },
+    {
+      "href": "/manga/tags/vampiri",
+      "text": "(335) vampiri"
+    },
+    {
+      "href": "/manga/tags/primo-amore",
+      "text": "(330) Primo-amore"
+    },
+    {
+      "href": "/manga/tags/divinit%C3%A0",
+      "text": "(328) Divinità"
+    },
+    {
+      "href": "/manga/tags/stupro-violenza-sessuale",
+      "text": "(325) Stupro-violenza-sessuale"
+    },
+    {
+      "href": "/manga/tags/alieni",
+      "text": "(324) Alieni"
+    },
+    {
+      "href": "/manga/tags/fraintendimenti-incomprensioni",
+      "text": "(320) Fraintendimenti-Incomprensioni"
+    },
+    {
+      "href": "/manga/tags/caratteristiche-animali",
+      "text": "(318) caratteristiche-animali"
+    },
+    {
+      "href": "/manga/tags/polizia-poliziotti",
+      "text": "(316) Polizia-Poliziotti"
+    },
+    {
+      "href": "/manga/tags/viaggio-nel-tempo",
+      "text": "(315) viaggio-nel-tempo"
+    },
+    {
+      "href": "/manga/tags/gemelli",
+      "text": "(314) Gemelli"
+    },
+    {
+      "href": "/manga/tags/crossdressing",
+      "text": "(304) crossdressing"
+    },
+    {
+      "href": "/manga/tags/samurai",
+      "text": "(292) samurai"
+    },
+    {
+      "href": "/manga/tags/amnesia",
+      "text": "(290) amnesia"
+    },
+    {
+      "href": "/manga/tags/yakuza",
+      "text": "(290) Yakuza"
+    },
+    {
+      "href": "/manga/tags/baseball",
+      "text": "(289) Baseball"
+    },
+    {
+      "href": "/manga/tags/sottotrama-romantica",
+      "text": "(285) Sottotrama-romantica"
+    },
+    {
+      "href": "/manga/tags/delinquenti",
+      "text": "(284) delinquenti"
+    },
+    {
+      "href": "/manga/tags/il-passato-gioca-un-ruolo-importante",
+      "text": "(284) Il-passato-gioca-un-ruolo-importante"
+    },
+    {
+      "href": "/manga/tags/personaggi-adulti",
+      "text": "(284) personaggi-adulti"
+    },
+    {
+      "href": "/manga/tags/studente-trasferito",
+      "text": "(281) Studente-trasferito"
+    },
+    {
+      "href": "/manga/tags/apocalisse-post-apocalittico",
+      "text": "(276) Apocalisse-Post-Apocalittico"
+    },
+    {
+      "href": "/manga/tags/fratelli",
+      "text": "(275) fratelli"
+    },
+    {
+      "href": "/manga/tags/episodico",
+      "text": "(274) Episodico"
+    },
+    {
+      "href": "/manga/tags/assassini",
+      "text": "(270) Assassini"
+    },
+    {
+      "href": "/manga/tags/superpoteri",
+      "text": "(269) Superpoteri"
+    },
+    {
+      "href": "/manga/tags/insegnanti",
+      "text": "(264) Insegnanti"
+    },
+    {
+      "href": "/manga/tags/survival-sopravvivenza",
+      "text": "(262) Survival-Sopravvivenza"
+    },
+    {
+      "href": "/manga/tags/protagonista-femminile-con-occhiali",
+      "text": "(261) protagonista-femminile-con-occhiali"
+    },
+    {
+      "href": "/manga/tags/robot",
+      "text": "(260) Robot"
+    },
+    {
+      "href": "/manga/tags/mangaka",
+      "text": "(257) Mangaka"
+    },
+    {
+      "href": "/manga/tags/avventurieri",
+      "text": "(255) avventurieri"
+    },
+    {
+      "href": "/manga/tags/identit%C3%A0-segreta",
+      "text": "(252) identità-segreta"
+    },
+    {
+      "href": "/manga/tags/amici-che-si-innamorano",
+      "text": "(251) Amici-che-si-innamorano"
+    },
+    {
+      "href": "/manga/tags/protagonista-maschile-popolare",
+      "text": "(251) Protagonista-maschile-popolare"
+    },
+    {
+      "href": "/manga/tags/relazione-professore-studente",
+      "text": "(250) Relazione-professore-studente"
+    },
+    {
+      "href": "/manga/tags/ambientazione-tetra",
+      "text": "(247) Ambientazione-tetra"
+    },
+    {
+      "href": "/manga/tags/streghe",
+      "text": "(247) streghe"
+    },
+    {
+      "href": "/manga/tags/trasformazioni",
+      "text": "(244) Trasformazioni"
+    },
+    {
+      "href": "/manga/tags/gag",
+      "text": "(243) Gag"
+    },
+    {
+      "href": "/manga/tags/elementi-misteriosi",
+      "text": "(241) Elementi-misteriosi"
+    },
+    {
+      "href": "/manga/tags/yokai",
+      "text": "(241) yokai"
+    },
+    {
+      "href": "/manga/tags/europa",
+      "text": "(240) Europa"
+    },
+    {
+      "href": "/manga/tags/coppia-sposata",
+      "text": "(238) Coppia-sposata"
+    },
+    {
+      "href": "/manga/tags/amore-a-prima-vista",
+      "text": "(236) Amore-a-prima-vista"
+    },
+    {
+      "href": "/manga/tags/relazione-tra-studenti",
+      "text": "(236) Relazione-tra-studenti"
+    },
+    {
+      "href": "/manga/tags/protagonista-bella",
+      "text": "(235) Protagonista-bella"
+    },
+    {
+      "href": "/manga/tags/corpo-militare-soldati-esercito",
+      "text": "(233) corpo-militare-soldati-esercito"
+    },
+    {
+      "href": "/manga/tags/orfani-orfanotrofio",
+      "text": "(232) Orfani-orfanotrofio"
+    },
+    {
+      "href": "/manga/tags/genitori-deceduti",
+      "text": "(229) Genitori-deceduti"
+    },
+    {
+      "href": "/manga/tags/ventunesimo-secolo",
+      "text": "(228) Ventunesimo-secolo"
+    },
+    {
+      "href": "/manga/tags/criminali",
+      "text": "(225) criminali"
+    },
+    {
+      "href": "/manga/tags/idol",
+      "text": "(224) idol"
+    },
+    {
+      "href": "/manga/tags/ambientazione-europea",
+      "text": "(223) ambientazione-europea"
+    },
+    {
+      "href": "/manga/tags/vicini-di-casa",
+      "text": "(222) Vicini-di-casa"
+    },
+    {
+      "href": "/manga/tags/maledizioni",
+      "text": "(221) Maledizioni"
+    },
+    {
+      "href": "/manga/tags/crescita-dei-protagonisti",
+      "text": "(216) crescita-dei-protagonisti"
+    },
+    {
+      "href": "/manga/tags/web-comic",
+      "text": "(215) Web-comic"
+    }
+  ]
+}
