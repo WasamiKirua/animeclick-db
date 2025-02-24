@@ -85,7 +85,7 @@ async def extract_manga_tags() -> list[dict]:
         print(f"Successfully extracted {len(tags_data)} tags")
         return tags_data
 
-def extract_pagination(url: str) -> list[str]:
+def extract_pagination(url: str) -> list[dict]:
     options = webdriver.ChromeOptions()
     # Remove headless mode
     # options.add_argument("--headless")
@@ -151,7 +151,7 @@ def extract_pagination(url: str) -> list[str]:
             EC.presence_of_element_located((By.ID, "pagination-opera"))
         )
         
-        manga_titles = set()  # Using a set to avoid duplicates
+        manga_data = {}  # Using dict to store all manga info with title as key
         page_number = 1
         
         while True:
@@ -165,22 +165,34 @@ def extract_pagination(url: str) -> list[str]:
             driver.implicitly_wait(1)
             
             try:
-                # Get fresh elements for each iteration
                 manga_elements = driver.find_elements(By.CLASS_NAME, "thumbnail-opera-info-extra")
                 
                 for element in manga_elements:
                     try:
+                        # Extract title from data-content
                         data_content = element.get_attribute("data-content")
                         if data_content:
                             title_start = data_content.find("<h5>") + 4
                             title_end = data_content.find("</h5>")
                             if title_start > 3 and title_end > 0:
                                 title = data_content[title_start:title_end]
-                                if title not in manga_titles:  # Only print new titles
-                                    manga_titles.add(title)
+                                
+                                # Only process if it's a new title
+                                if title not in manga_data:
+                                    # Find the link and image elements
+                                    link_elem = element.find_element(By.CSS_SELECTOR, ".caption a")
+                                    img_elem = element.find_element(By.CSS_SELECTOR, "img.img-responsive")
+                                    
+                                    manga_data[title] = {
+                                        "title": title,
+                                        "href": link_elem.get_attribute("href"),
+                                        "img_src": img_elem.get_attribute("src")
+                                    }
                                     print(f"Found manga: {title}")
+                                    print(f"  URL: {manga_data[title]['href']}")
+                                    print(f"  Image: {manga_data[title]['img_src']}")
                     except Exception as e:
-                        print(f"Error extracting manga title: {e}")
+                        print(f"Error extracting manga data: {e}")
                         continue
                 
                 # Check if next button exists and is clickable
@@ -199,7 +211,7 @@ def extract_pagination(url: str) -> list[str]:
                 
                 # Add delay between page clicks
                 print("Waiting 2 seconds before next page...")
-                time.sleep(2)
+                time.sleep(5)
                 
                 # Wait for page content to change using URL or page number instead
                 WebDriverWait(driver, 10).until(
@@ -212,8 +224,8 @@ def extract_pagination(url: str) -> list[str]:
                 print(f"Error processing page: {e}")
                 break
 
-        print(f"\nTotal unique manga found: {len(manga_titles)}")
-        return sorted(list(manga_titles))
+        print(f"\nTotal unique manga found: {len(manga_data)}")
+        return sorted(list(manga_data.values()), key=lambda x: x['title'])
 
     except Exception as e:
         print(f"Error during extraction: {e}")
@@ -249,4 +261,3 @@ async def process_manga_tags():
 
 if __name__ == "__main__":
     asyncio.run(process_manga_tags())
-
