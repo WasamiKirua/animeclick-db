@@ -249,13 +249,36 @@ async def process_manga_tags():
         print("No tags found!")
         return
 
+    # Create directory for manga data
+    os.makedirs('data/manga_by_tag', exist_ok=True)
+
     # Process each tag
     for tag in tags:
         href = tag.get('href', '')
+        tag_name = tag.get('text', '').strip()
         if href:
             url = f"https://animeclick.it{href}"
-            pages = extract_pagination(url)  # Non-async call
-            print(f"Tag {href}: Pages - {pages}")
+            manga_list = extract_pagination(url)  # Now returns list of dicts
+            
+            # Create output data structure
+            output = {
+                "tag": tag_name,
+                "tag_url": href,
+                "extraction_date": datetime.now().isoformat(),
+                "manga_count": len(manga_list),
+                "manga_list": manga_list
+            }
+            
+            # Generate filename from tag name (sanitized)
+            filename = tag_name.lower().replace(' ', '_').replace('/', '_')
+            filepath = f'data/manga_by_tag/{filename}.json'
+            
+            # Save to JSON file
+            with open(filepath, 'w', encoding='utf-8') as f:
+                json.dump(output, f, indent=2, ensure_ascii=False)
+            
+            print(f"Tag {tag_name}: Saved {len(manga_list)} manga to {filepath}")
+            
             # Add a small delay between requests
             await asyncio.sleep(1)
 
