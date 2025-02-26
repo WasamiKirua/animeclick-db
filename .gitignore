@@ -9,3 +9,5 @@ chromedriver
 
 # Virtual environments
 .venv
+.env
+*.json

@@ -4,12 +4,17 @@ from crawl4ai.extraction_strategy import JsonCssExtractionStrategy
 import json
 from datetime import datetime
 import os
-from selenium import webdriver
+from seleniumwire import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+from dotenv import load_dotenv
 import time
+
+load_dotenv()
 
 async def extract_manga_tags() -> list[dict]:
     # Browser Configuration
@@ -86,21 +91,39 @@ async def extract_manga_tags() -> list[dict]:
         return tags_data
 
 def extract_pagination(url: str) -> list[dict]:
-    options = webdriver.ChromeOptions()
-    # Remove headless mode
-    # options.add_argument("--headless")
+    # Proxy configuration
+    proxy_username = os.getenv("PROXY_USERNAME")
+    proxy_password = os.getenv("PROXY_PASSWORD")
+    proxy_address = os.getenv("PROXY_ADDRESS")
+    proxy_port = os.getenv("PROXY_PORT")
+    
+    # Formulate proxy URL
+    proxy_url = f"http://{proxy_username}:{proxy_password}@{proxy_address}:{proxy_port}"
+    
+    # Selenium-wire options for proxy
+    seleniumwire_options = {
+        "proxy": {
+            "http": proxy_url,
+            "https": proxy_url
+        },
+    }
+    
+    # Chrome options
+    options = Options()
+    # options.add_argument("--headless=new")  # Uncomment for headless mode
     options.add_argument("--disable-blink-features=AutomationControlled")
     options.add_argument("--disable-automation")
-    options.add_argument("--start-maximized")  # Start with maximized window
-    options.add_argument("--window-size=1920,1080")  # Set specific window size
-    
-    # Create service with local chromedriver
-    service = Service(executable_path="./chromedriver")
-    
-    # Create driver with service and options
-    driver = webdriver.Chrome(service=service, options=options)
+    options.add_argument("--start-maximized")
+    options.add_argument("--window-size=1920,1080")
     
     try:
+        # Initialize Chrome driver with selenium-wire
+        driver = webdriver.Chrome(
+            service=Service(ChromeDriverManager().install()),
+            seleniumwire_options=seleniumwire_options,
+            options=options
+        )
+        
         print(f"\nNavigating to {url}")
         driver.get(url)
         
