@@ -56,10 +56,36 @@ async def extract_manga_tags() -> list[dict]:
         cache_mode=CacheMode.BYPASS,
         extraction_strategy=extraction_strategy,
         js_code="""
-            document.querySelector('.header a[href="/ricerca/manga"]').click();
+            return new Promise((resolve) => {
+                // First check if we're on the landing page
+                if (window.location.href.includes('trailer.mp4')) {
+                    console.log('On landing page...');
+                    const link = document.querySelector('.header a[href="/ricerca/manga"]');
+                    if (link) {
+                        console.log('Clicking manga link...');
+                        link.click();
+                    }
+                }
+                resolve(true);
+            });
         """,
         wait_for="""
-            () => document.querySelector('div.panel-body span.label-tag') !== null
+            () => {
+                console.log('Current URL:', window.location.href);
+                
+                // If we're on the search page
+                const form = document.querySelector('#form-ricerca-opera');
+                if (form) {
+                    console.log('Found search form, submitting...');
+                    form.submit();
+                    return false;
+                }
+                
+                // Wait for manga details
+                const details = document.querySelector('.col-xs-12.col-sm-7.col-md-8.col-lg-9 dl.dl-horizontal');
+                console.log('Details element found:', details !== null);
+                return details !== null;
+            }
         """
     )
 
@@ -305,5 +331,227 @@ async def process_manga_tags():
             # Add a small delay between requests
             await asyncio.sleep(1)
 
+async def extract_manga_details():
+    # Browser Configuration (reusing from extract_manga_tags)
+    browser_config = BrowserConfig(
+        headless=True,
+        viewport_width=1920,
+        viewport_height=1080,
+        user_agent_mode="random",
+        extra_args=[
+            "--disable-blink-features=AutomationControlled",
+            "--disable-automation",
+            "--disable-dev-shm-usage"
+        ]
+    )
+
+    # Create directory for manga details
+    os.makedirs('data/manga_details', exist_ok=True)
+
+    # Define schemas for manga details extraction
+    details_schema = {
+        "name": "Manga Details",
+        "baseSelector": "#dettagli",  # This is the parent div containing both sections
+        "fields": [
+            {
+                "name": "titolo_originale",
+                "selector": "dl.dl-horizontal dt:contains('Titolo originale') + dd span[itemprop='name']",
+                "type": "text",
+                "defaultValue": None
+            },
+            {
+                "name": "titolo_inglese",
+                "selector": "dl.dl-horizontal dt:contains('Titolo inglese') + dd span[itemprop='name']",
+                "type": "text",
+                "defaultValue": None
+            },
+            {
+                "name": "titolo_kanji",
+                "selector": "dl.dl-horizontal dt:contains('Titolo Kanji') + dd span[itemprop='name']",
+                "type": "text",
+                "defaultValue": None
+            },
+            {
+                "name": "nazionalita",
+                "selector": "dl.dl-horizontal dt:contains('Nazionalità') + dd span[itemprop='contentLocation'] span[itemprop='name']",
+                "type": "text",
+                "defaultValue": None
+            },
+            {
+                "name": "casa_editrice",
+                "selector": "dl.dl-horizontal dt:contains('Casa Editrice') + dd span[itemprop='creator'] span[itemprop='name'] a",
+                "type": "text",
+                "defaultValue": None
+            },
+            {
+                "name": "storia",
+                "selector": "dl.dl-horizontal dt:contains('Storia') ~ dd span[itemprop='name'] a",
+                "type": "text",
+                "defaultValue": None,
+                "transform": lambda values: ", ".join(values) if isinstance(values, list) else values
+            },
+            {
+                "name": "disegni",
+                "selector": "dl.dl-horizontal dt:contains('Disegni') ~ dd span[itemprop='name'] a",
+                "type": "text",
+                "defaultValue": None,
+                "transform": lambda values: ", ".join(values) if isinstance(values, list) else values
+            },
+            {
+                "name": "categorie",
+                "selector": "dl.dl-horizontal dt:contains('Categoria') + dd a",
+                "type": "array",
+                "defaultValue": []
+            },
+            {
+                "name": "generi",
+                "selector": "dl.dl-horizontal dt:contains('Genere') + dd span[itemprop='genre']",
+                "type": "array",
+                "defaultValue": []
+            },
+            {
+                "name": "anno",
+                "selector": "dl.dl-horizontal dt:contains('Anno') + dd a",
+                "type": "text",
+                "defaultValue": None
+            },
+            {
+                "name": "volumi",
+                "selector": "dl.dl-horizontal dt:contains('Volumi') + dd",
+                "type": "text",
+                "defaultValue": None
+            },
+            {
+                "name": "capitoli",
+                "selector": "dl.dl-horizontal dt:contains('Capitoli') + dd",
+                "type": "text",
+                "defaultValue": None
+            },
+            {
+                "name": "stato_patria",
+                "selector": "dl.dl-horizontal dt:contains('Stato in patria') + dd",
+                "type": "text",
+                "defaultValue": None
+            },
+            {
+                "name": "stato_italia",
+                "selector": "dl.dl-horizontal dt:contains('Stato in Italia') + dd",
+                "type": "text",
+                "defaultValue": None
+            },
+            {
+                "name": "disponibilita",
+                "selector": "dl.dl-horizontal dt:contains('Disponibilità') + dd span[itemprop='publisher'] span[itemprop='name']",
+                "type": "text",
+                "defaultValue": None
+            },
+            {
+                "name": "serializzato_su",
+                "selector": "dl.dl-horizontal dt:contains('Serializzato su') + dd a",
+                "type": "text",
+                "defaultValue": None
+            },
+            {
+                "name": "tag_generici",
+                "selector": "dl.dl-horizontal dt:contains('Tag generici') + dd a",
+                "type": "array",
+                "defaultValue": []
+            },
+            {
+                "name": "trama",
+                "selector": "#trama-div",
+                "type": "text",
+                "defaultValue": None,
+                "transform": lambda value: value.split("Trama:")[1].strip() if value and "Trama:" in value else value
+            }
+        ]
+    }
+
+    details_strategy = JsonCssExtractionStrategy(details_schema)
+
+    # Create config for manga details extraction
+    config = CrawlerRunConfig(
+        cache_mode=CacheMode.BYPASS,
+        extraction_strategy=details_strategy,
+        wait_for="""
+            () => {
+                // Wait for manga details
+                const details = document.querySelector('.col-xs-12.col-sm-7.col-md-8.col-lg-9 dl.dl-horizontal');
+                console.log('Details element found:', details !== null);
+                return details !== null;
+            }
+        """
+    )
+
+    # Process each JSON file in manga_by_tag directory
+    manga_by_tag_dir = 'data/manga_by_tag'
+    for filename in os.listdir(manga_by_tag_dir):
+        if not filename.endswith('.json'):
+            continue
+            
+        filepath = os.path.join(manga_by_tag_dir, filename)
+        print(f"\nProcessing manga from {filename}")
+        
+        with open(filepath, 'r', encoding='utf-8') as f:
+            tag_data = json.load(f)
+            
+        manga_list = tag_data.get('manga_list', [])
+        
+        async with AsyncWebCrawler(config=browser_config) as crawler:
+            for manga in manga_list:
+                manga_url = f"{manga['href']}"
+                print(f"\nVisiting: {manga_url}")
+                
+                try:
+                    print("Making request...")
+                    result = await crawler.arun(
+                        url=manga_url,
+                        config=config
+                    )
+                    print("Request completed")
+                    print(f"Success: {result.success}")
+                    
+                    if result.success:
+                        print("\nRaw HTML content (first 500 chars):")
+                        print(result.html[:500])
+                        print("\nExtracted content:")
+                        print(result.extracted_content)
+                        
+                        details_list = json.loads(result.extracted_content)
+                        details = details_list[0] if details_list else {}
+                        
+                        # Skip if no details were extracted
+                        if not details or all(value is None or value == [] for value in details.values()):
+                            print("No details extracted, skipping save...")
+                            continue
+                            
+                        # Create output structure
+                        output = {
+                            "url": manga_url,
+                            "extraction_date": datetime.now().isoformat(),
+                            "details": details
+                        }
+                        
+                        manga_id = manga_url.split('/')[-1]
+                        details_filepath = f'data/manga_details/{manga_id}.json'
+                        
+                        with open(details_filepath, 'w', encoding='utf-8') as f:
+                            json.dump(output, f, indent=2, ensure_ascii=False)
+                        
+                        print(f"Saved details to {details_filepath}")
+                    else:
+                        print(f"Failed to fetch manga page: {result.error_message}")
+                    
+                    await asyncio.sleep(2)
+                    
+                except Exception as e:
+                    print(f"Error processing manga {manga.get('title', manga_url)}: {str(e)}")
+                    continue
+
 if __name__ == "__main__":
-    asyncio.run(process_manga_tags())
+    # Add the new function to the main execution
+    async def main():
+        #await process_manga_tags()  # Comment this out if you just want to test manga details
+        #await extract_manga_details()
+        print()
+        asyncio.run(main())
