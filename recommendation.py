@@ -26,12 +26,12 @@ classifier = pipeline("zero-shot-classification",
                 model="Jiva/xlm-roberta-large-it-mnli",
                 device="mps")
 
-result = classifier(sequence, generi)
-
 print(Fore.GREEN + "--------------------------------" + Style.RESET_ALL)
 print(Fore.GREEN + "Genra Classification" + Style.RESET_ALL)
 sequence = mangas.loc[0]['trama']
 print(Fore.GREEN + sequence + Style.RESET_ALL)
+
+result = classifier(sequence, generi)
 # Get indices of top 3 scores in descending order
 top_3_indices = np.argsort(result["scores"])[-3:][::-1]
 top_3_labels = [result["labels"][i] for i in top_3_indices]
