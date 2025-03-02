@@ -1,4 +1,4 @@
-# AnimeClick.it Manga Scraper
+# AnimeClick.it Manga Scraper for Dataset creation (RAG, Text and Sentimental Analysis)
 
 A robust asynchronous web scraper designed to extract manga information from AnimeClick.it. Built with Python, it handles pagination, tag-based browsing, and detailed manga information extraction while respecting the site's resources. Uses Datpulse for proxy management and anti-detection measures.
 

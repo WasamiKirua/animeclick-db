@@ -4,7 +4,6 @@ from colorama import Fore, Style
 
 mangas = pd.read_csv('animeclick_manga_dataset_20250228.csv')
 
-
 from transformers import pipeline
 
 generi = [
