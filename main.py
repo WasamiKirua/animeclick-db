@@ -551,7 +551,7 @@ async def extract_manga_details():
 if __name__ == "__main__":
     # Add the new function to the main execution
     async def main():
-        #await process_manga_tags()  # Comment this out if you just want to test manga details
-        #await extract_manga_details()
+        await process_manga_tags()  # Comment this out if you just want to test manga details
+        await extract_manga_details()
         print()
         asyncio.run(main())

@@ -1,15 +1,16 @@
 # AnimeClick.it Manga Scraper
 
-A robust asynchronous web scraper designed to extract manga information from AnimeClick.it. Built with Python, it handles pagination, tag-based browsing, and detailed manga information extraction while respecting the site's resources.
+A robust asynchronous web scraper designed to extract manga information from AnimeClick.it. Built with Python, it handles pagination, tag-based browsing, and detailed manga information extraction while respecting the site's resources. Uses Datpulse for proxy management and anti-detection measures.
 
 ## Features
 
 - 🚀 Asynchronous web scraping with AsyncWebCrawler
 - 📚 Complete manga information extraction
 - 🏷️ Tag-based manga categorization
-- 💾 Structured JSON output
-- 🤖 Anti-bot detection measures
+- 💾 Structured JSON and CSV output
+- 🤖 Anti-bot detection measures via Datpulse proxies
 - ⏱️ Rate limiting and polite crawling
+- 🔄 Automatic deduplication of manga entries
 
 ## Installation
 
@@ -33,9 +34,16 @@ source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
+4. Configure environment variables:
+
+```bash
+cp .env.example .env
+# Edit .env with your Datpulse API key and other settings
+```
+
 ## Usage
 
-The scraper provides two main functions:
+The scraper provides three main functions:
 
 ### 1. Extract Manga Tags
 ```python
@@ -52,6 +60,16 @@ await extract_manga_details()
 - Processes manga from tag files
 - Extracts comprehensive information
 - Saves individual manga files in `data/manga_details/`
+
+### 3. Generate Dataset
+```python
+python dataset_maker.py
+```
+- Combines all manga details into a single dataset
+- Removes duplicate entries based on URL
+- Generates two output files:
+  - `animeclick_manga_dataset_20250228.json` (JSON format)
+  - `animeclick_manga_dataset_20250228.csv` (CSV format)
 
 ## Data Structure
 
@@ -98,11 +116,27 @@ await extract_manga_details()
 }
 ```
 
+### Dataset Format
+The final dataset files contain the following fields for each manga:
+- `url`: Unique identifier and source URL
+- `titolo_originale`: Original title
+- `titolo_inglese`: English title
+- `titolo_kanji`: Title in kanji
+- `nazionalita`: Nationality/origin
+- `casa_editrice`: Publisher
+- `storia`: Story author
+- `disegni`: Artist
+- `anno`: Year of publication
+- `stato_patria`: Status in original country
+- `stato_italia`: Status in Italy
+- `serializzato_su`: Serialization magazine
+- `trama`: Plot summary
+
 ## Technical Details
 
 ### Browser Configuration
 - Headless mode for efficient operation
-- Random user agent rotation
+- Datpulse proxy integration for IP rotation
 - Anti-detection measures
 - Configurable viewport settings
 
@@ -116,26 +150,25 @@ await extract_manga_details()
 - 2-second delay between manga requests
 - 1-second delay between tag requests
 - Configurable delay settings
+- Proxy rotation via Datpulse
 
 ### Error Handling
 - Network error recovery
 - JSON validation
 - Empty result detection
 - Continuous operation on individual failures
+- Proxy fallback mechanisms
 
-## Example Data
+## Environment Variables
 
-The repository includes sample data files:
+The following environment variables are required in the `.env` file:
 
-### Tag Examples
-- `data/manga_by_tag/(260)_robot.json` - Robot-themed manga
-- `data/manga_by_tag/(215)_web-comic.json` - Web comics
-
-### Manga Examples
-- `data/manga_details/3-ban-sen-no-campanella.json`
-- `data/manga_details/3-banme-no-kareshi.json`
-- `data/manga_details/13-club.json`
-- `data/manga_details/8tsuki-31nichi-no-long-summer.json`
+```
+PROXY_USERNAME=YOUR USER
+PROXY_PASSWORD=YOUR PASSWORD
+PROXY_ADDRESS=gw.dataimpulse.com
+PROXY_PORT=823
+```
 
 ## Contributing
 
