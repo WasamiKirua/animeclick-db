@@ -11,3 +11,4 @@ chromedriver
 .venv
 .env
 *.json
+*.csv
