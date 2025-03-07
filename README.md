@@ -19,6 +19,7 @@ A robust asynchronous web scraper designed to extract manga information from Ani
 ```bash
 git clone https://github.com/yourusername/animeclick-manga-scraper.git
 cd animeclick-manga-scraper
+uv sync
 ```
 
 2. Create and activate a virtual environment:
@@ -49,12 +50,34 @@ cp .env.example .env
 python main.py
 ```
 
-
 ### 2. Enrich Manga Details and Generate Dataset (CSV and JSON format)
 ```
 python dataset_maker.py
 ```
 
+### 3. Run Genre Classification and Sentiment Analysis
+```
+python recommendation.py
+```
+
+This script provides three types of analysis for manga plot summaries:
+
+1. **Genre Classification**
+   - Uses `Jiva/xlm-roberta-large-it-mnli` model for zero-shot classification
+   - Classifies manga into multiple genres
+   - Shows top 3 most likely genres with confidence scores
+
+2. **Emotion Analysis (MilaNLProc)**
+   - Uses `MilaNLProc/feel-it-italian-emotion` model
+   - Analyzes emotions: anger, fear, joy, sadness
+   - Provides confidence scores as percentages
+
+3. **Extended Emotion Analysis (aiknowyou)**
+   - Uses `aiknowyou/it-emotion-analyzer` model
+   - Analyzes six emotions: sadness, joy, love, anger, fear, surprise
+   - Shows top 3 emotions with confidence scores
+
+All analyses are color-coded in the terminal output for better readability using the `colorama` package.
 
 ## Data Structure
 
