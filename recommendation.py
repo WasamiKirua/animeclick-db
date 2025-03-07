@@ -27,9 +27,12 @@ classifier = pipeline("zero-shot-classification",
 
 print(Fore.GREEN + "--------------------------------" + Style.RESET_ALL)
 print(Fore.GREEN + "Genra Classification" + Style.RESET_ALL)
+print(Fore.GREEN + "--------------------------------" + Style.RESET_ALL)
 sequence = mangas.loc[0]['trama']
+print(Fore.GREEN + "Trama:" + Style.RESET_ALL)
+print()
 print(Fore.GREEN + sequence + Style.RESET_ALL)
-
+print()
 result = classifier(sequence, generi)
 # Get indices of top 3 scores in descending order
 top_3_indices = np.argsort(result["scores"])[-3:][::-1]
@@ -39,11 +42,12 @@ top_3_scores = [result["scores"][i] for i in top_3_indices]
 # Print the top 3 genres with their scores
 for label, score in zip(top_3_labels, top_3_scores):
     print(Fore.GREEN + f"{label}: {score:.4f}" + Style.RESET_ALL)
-
-
+    print()
 
 print(Fore.GREEN + "--------------------------------" + Style.RESET_ALL)
-print(Fore.GREEN + "Sentimental Analysis" + Style.RESET_ALL)
+print(Fore.GREEN + "Sentimental Analysis Top 3)" + Style.RESET_ALL)
+print(Fore.GREEN + "Model: MilaNLProc/feel-it-italian-emotion (anger, fear, joy, sadness)" + Style.RESET_ALL)
+print(Fore.GREEN + "--------------------------------" + Style.RESET_ALL)
 classifier = pipeline("text-classification",model='MilaNLProc/feel-it-italian-emotion',top_k=4)
 prediction = classifier(sequence)
 
@@ -56,9 +60,15 @@ for i in prediction:
 
 
 print(Fore.GREEN + "--------------------------------" + Style.RESET_ALL)
-print(Fore.GREEN + "Sentimental Analysis" + Style.RESET_ALL)
+print(Fore.GREEN + "Sentimental Analysis Top 3" + Style.RESET_ALL)
+print(Fore.GREEN + "Model: aiknowyou/it-emotion-analyzer (sadness, joy, love, anger, fear, surprise)" + Style.RESET_ALL)
+print(Fore.GREEN + "--------------------------------" + Style.RESET_ALL)
 trama =[mangas.loc[0]['trama']]
+print(Fore.GREEN + "Trama:" + Style.RESET_ALL)
+print()
 print(Fore.GREEN + trama[0] + Style.RESET_ALL)
+print(Fore.GREEN + "--------------------------------" + Style.RESET_ALL)
+print()
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 
 tokenizer = AutoTokenizer.from_pretrained("aiknowyou/it-emotion-analyzer")
