@@ -43,33 +43,18 @@ cp .env.example .env
 
 ## Usage
 
-The scraper provides three main functions:
+### 1. Extract Manga Details
 
-### 1. Extract Manga Tags
-```python
-await process_manga_tags()
 ```
-- Extracts all manga tags from the site
-- Creates a master list in `data/manga_tags.json`
-- Generates individual tag files in `data/manga_by_tag/`
-
-### 2. Extract Manga Details
-```python
-await extract_manga_details()
+python main.py
 ```
-- Processes manga from tag files
-- Extracts comprehensive information
-- Saves individual manga files in `data/manga_details/`
 
-### 3. Generate Dataset
-```python
+
+### 2. Enrich Manga Details and Generate Dataset (CSV and JSON format)
+```
 python dataset_maker.py
 ```
-- Combines all manga details into a single dataset
-- Removes duplicate entries based on URL
-- Generates two output files:
-  - `animeclick_manga_dataset_20250228.json` (JSON format)
-  - `animeclick_manga_dataset_20250228.csv` (CSV format)
+
 
 ## Data Structure
 
@@ -110,9 +95,38 @@ python dataset_maker.py
         "stato_patria": "completato",
         "stato_italia": "inedito",
         "serializzato_su": "Magazine Name",
-        "tag_generici": ["action", "fantasy"],
         "trama": "Plot summary of the manga..."
     }
+}
+```
+### Manga Enhanced (`data/enhanced_dataset/manga_details/*.json)
+```json
+{
+  "url": "https://www.animeclick.it/manga/59956/1-2-3-de-kimeteageru",
+  "titolo_originale": "Original Japanese Title",
+  "titolo_inglese": "English Title",
+  "titolo_kanji": "漢字タイトル",
+  "nazionalita": "Giappone",
+  "casa_editrice": "Publisher Name",
+  "storia": "Story Author",
+  "disegni": "Artist Name",
+  "categorie": ["Shounen", "Seinen"],
+  "generi": ["Action", "Adventure"],
+  "anno": "2024",
+  "volumi": "10",
+  "capitoli": "42",
+  "stato_patria": "completato",
+  "stato_italia": "inedito",
+  "serializzato_su": "Magazine Name",
+  "trama": "Plot summary of the manga..."
+  "generi": [
+    "Scolastico",
+    "Sport"
+  ],
+  "tag_generici": [
+    "club-scolastico",
+    "Wrestling"
+  ]
 }
 ```
 
@@ -131,6 +145,8 @@ The final dataset files contain the following fields for each manga:
 - `stato_italia`: Status in Italy
 - `serializzato_su`: Serialization magazine
 - `trama`: Plot summary
+- `generi`: List og genras
+- `tag_generici`: List of genra tags 
 
 ## Technical Details
 
